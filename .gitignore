@@ -1,0 +1,2 @@
+# ignore __pycache__ directory
+/modules/__pycache__
