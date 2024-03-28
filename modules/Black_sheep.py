@@ -1,13 +1,19 @@
 import pygame
 import sys
-from orders import orders
-from colores import colores
-from Backgrounds import Background, BackgroundImage
-from Board import Board
+import os
+from pathlib import Path
+
+
+from .orders import orders
+from .colores import colores
+from .Backgrounds import BackgroundImage
+from .Board import Board
 
 SIZE = (600, 600)
 FPS = 60
 
+
+IMAGES_DIR = os.path.join(Path(__file__).parent.parent, 'assets', 'images')
 
 class BlackSheep:
 
@@ -19,7 +25,7 @@ class BlackSheep:
         self.opening_page()
 
     def opening_page(self):
-        background = BackgroundImage(self.screen, SIZE, 'BlackSheepSign.png')
+        background = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'BlackSheepSign.png'))
         background.add_box(405, 62, 193, 120, color=colores['BROWN'])
         background.add_text('Welcome', 430, 60, size=30, color=colores['BLACK'], font='Arial Black')
         background.add_text('to', 490, 90, size=20, color=colores['BLACK'], font='Arial Black')
@@ -44,7 +50,7 @@ class BlackSheep:
             self.clock.tick(FPS)
 
     def menu_page(self):
-        background = BackgroundImage(self.screen, SIZE, 'Black_sheep_bass.png')
+        background = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'Black_sheep_bass.png'))
         background.add_text('Choose your level', 10, 390, font='Viner Hand ITC.', color=colores['YELLOW'])
         input_box = background.add_input_box(x=20, y=500, width=33, height=40, prompt='Choose a level from 1 to 48: ',
                                              prompt_above=False, limit=2)
@@ -125,7 +131,7 @@ class BlackSheep:
             self.clock.tick(FPS)
 
     def instructions_page(self):
-        page = BackgroundImage(self.screen, SIZE, 'Black_sheep_sign_blur.png')
+        page = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'Black_sheep_sign_blur.png'))
         text = [
             "Goal: Stay with only one ball on the board.",
             "How:",

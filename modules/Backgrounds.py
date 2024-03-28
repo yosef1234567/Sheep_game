@@ -1,6 +1,7 @@
 import pygame
-from colores import colores
-from Buttons import Button, InputBox, HoverButton, TextBox
+
+from .colores import colores
+from .Buttons import Button, InputBox, HoverButton, TextBox
 
 
 class Background:

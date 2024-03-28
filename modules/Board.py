@@ -1,7 +1,13 @@
 import pygame
-from colores import colores
+import os
+from pathlib import Path
 from itertools import permutations
-from Backgrounds import Background
+
+from .colores import colores
+from .Backgrounds import Background
+
+
+IMAGES_DIR = os.path.join(Path(__file__).parent.parent, 'assets', 'images')
 
 
 class Board(Background):
@@ -139,7 +145,7 @@ class Ball(pygame.sprite.Sprite):
 
     def __init__(self, hole, board, color='w', size=(50, 50)):
         super().__init__()
-        image = 'bright_ball.png' if color == 'w' else 'black_sheep_no_background.png'
+        image = os.path.join(IMAGES_DIR, 'bright_ball.png') if color == 'w' else os.path.join(IMAGES_DIR, 'black_sheep_no_background.png')
         img = pygame.image.load(image).convert()
         self.image = pygame.transform.scale(img, size)
         self.image.set_colorkey(colores['WHITE'])
@@ -238,7 +244,7 @@ class Hole(pygame.sprite.Sprite):
     def __init__(self, hole_size, position, number, screen):
         super().__init__()
         self.ball = None
-        img = pygame.image.load('hole.png').convert()
+        img = pygame.image.load(os.path.join(IMAGES_DIR, 'hole.png')).convert()
         self.image = pygame.transform.scale(img, (hole_size, hole_size)).convert()
         self.image.set_colorkey(colores['WHITE'])
         self.rect = self.image.get_rect()

@@ -1,5 +1,5 @@
 import pygame
-from colores import colores
+from modules.colores import colores
 
 
 class Button:
