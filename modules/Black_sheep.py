@@ -9,7 +9,7 @@ from .colores import colores
 from .Backgrounds import BackgroundImage
 from .Board import Board
 
-SIZE = (600, 600)
+
 FPS = 60
 
 
@@ -20,19 +20,21 @@ class BlackSheep:
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode(SIZE)
+        self.size = pygame.display.Info().current_h - 320
+        self.size = 600 
+        self.screen = pygame.display.set_mode((self.size, self.size), pygame.RESIZABLE)
         pygame.display.set_caption('BLACK SHEEP')
         self.opening_page()
 
     def opening_page(self):
-        background = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'BlackSheepSign.png'))
-        background.add_box(405, 62, 193, 120, color=colores['BROWN'])
-        background.add_text('Welcome', 430, 60, size=30, color=colores['BLACK'], font='Arial Black')
-        background.add_text('to', 490, 90, size=20, color=colores['BLACK'], font='Arial Black')
-        background.add_text('Black Sheep!', 410, 111, size=30, color=colores['BLACK'], font='Viner Hand ITC.')
-        button = background.add_button(460, 145, 80, 35, color=colores['RED'], text='Start',
+        background = BackgroundImage(self.screen, (self.size, self.size), os.path.join(IMAGES_DIR, 'BlackSheepSign.png'))
+        background.add_box(int(self.size/1.48), int(self.size/9.68), int(self.size/3.11), int(self.size/5.0), color=colores['BROWN'])
+        background.add_text('Welcome', int(self.size/1.4), int(self.size/10.0), size=int(self.size/20.0), color=colores['BLACK'], font='Arial Black')
+        background.add_text('to', int(self.size/1.22), int(self.size/6.67), size=int(self.size/30.0), color=colores['BLACK'], font='Arial Black')
+        background.add_text('Black Sheep!', int(self.size/1.46), int(self.size/5.41), size=int(self.size/20.0), color=colores['BLACK'], font='Viner Hand ITC.')
+        button = background.add_button(int(self.size/1.3), int(self.size/4.14), int(self.size/7.5), int(self.size/17.14), color=colores['RED'], text='Start',
                                        text_color=colores['WHITE'], onclick_function=self.menu_page)
-        hover_button = background.add_hover_button(370, 20, 80, 35, color=colores['YELLOW'],
+        hover_button = background.add_hover_button(int(self.size/1.62), int(self.size/30.0), int(self.size/7.5), int(self.size/17.14), color=colores['YELLOW'],
                                                    text='Hover for instructions',
                                                    onclick_function=self.instructions_page)
 
@@ -50,9 +52,9 @@ class BlackSheep:
             self.clock.tick(FPS)
 
     def menu_page(self):
-        background = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'Black_sheep_bass.png'))
-        background.add_text('Choose your level', 10, 390, font='Viner Hand ITC.', color=colores['YELLOW'])
-        input_box = background.add_input_box(x=20, y=500, width=33, height=40, prompt='Choose a level from 1 to 48: ',
+        background = BackgroundImage(self.screen, (self.size, self.size), os.path.join(IMAGES_DIR, 'Black_sheep_bass.png'))
+        background.add_text('Choose your level', int(self.size/60.0), int(self.size/1.54), size=int(self.size/15.0), font='Viner Hand ITC.', color=colores['YELLOW'])
+        input_box = background.add_input_box(x=int(self.size/30.0), y=int(self.size/1.2), width=int(self.size/18.18), height=int(self.size/15.0), prompt='Choose a level from 1 to 48: ',
                                              prompt_above=False, limit=2)
 
         run_background = True
@@ -78,10 +80,10 @@ class BlackSheep:
         active_ball = None
         active_game = True
         order = orders[level - 1]
-        board = Board(self.screen, SIZE, white_order=order[:-1], black_ball_loc=order[-1],
+        board = Board(self.screen, (self.size, self.size), white_order=order[:-1], black_ball_loc=order[-1],
                       color=colores['BLACK1'])
-        board.add_text(f'LEVEL {level}', 10, 2, size=35, color=colores['YELLOW'], font='Arial black')
-        buttons = [board.add_button(x=220, y=10, width=10, height=35, text='Go back to menu.', onclick_function=self.menu_page)]
+        board.add_text(f'LEVEL {level}', int(self.size/60.0), int(self.size/300.0), size=int(self.size/17.14), color=colores['YELLOW'], font='Arial black')
+        buttons = [board.add_button(x=int(self.size/2.73), y=int(self.size/60.0), width=int(self.size/60.0), height=int(self.size/17.14), text='Go back to menu.', onclick_function=self.menu_page)]
 
         running = True
         while running:
@@ -116,22 +118,22 @@ class BlackSheep:
                 active_game = False
                 if board.win():
                     if level < 48:
-                        board.add_text('Hooray! You won.', 50, 540, size=48, box=True, color=colores['RED'],
+                        board.add_text('Hooray! You won.', int(self.size/12.0), int(self.size/1.11), size=int(self.size/12.5), box=True, color=colores['RED'],
                                        box_color=colores['YELLOW'])
-                        buttons.append(board.add_button(x=470, y=10, width=10, height=35, text='Next level', onclick_function=self.main_game, onclick_args=(level + 1,), one_press=True))
+                        buttons.append(board.add_button(x=int(self.size/1.28), y=int(self.size/60.0), width=int(self.size/60.0), height=int(self.size/17.14), text='Next level', onclick_function=self.main_game, onclick_args=(level + 1,), one_press=True))
                     else:
-                        board.add_text('WOW, You definitely cracked the system...', x=10, y=550, size=39, box=True, color=colores['RED'], box_color=colores['YELLOW'])
+                        board.add_text('WOW, You definitely cracked the system...', x=int(self.size/60.0), y=int(self.size/1.09), size=int(self.size/15.38), box=True, color=colores['RED'], box_color=colores['YELLOW'])
                 else:
-                    board.add_text("Stuck?  Never mind,  Maybe  you'll  succeed  next  time.", 10, 555, size=24,
+                    board.add_text("Stuck?  Never mind,  Maybe  you'll  succeed  next  time.", int(self.size/60.0), int(self.size/1.08), size=int(self.size/25.0),
                                    box=True, color=colores['YELLOW'], box_color=colores['RED'], font='Viner Hand ITC.')
 
-                    buttons.append(board.add_button(x=470, y=10, width=10, height=35, text='Try again', onclick_function=self.main_game, onclick_args=(level,), one_press=True))
+                    buttons.append(board.add_button(x=int(self.size/1.28), y=int(self.size/60.0), width=int(self.size/60.0), height=int(self.size/17.14), text='Try again', onclick_function=self.main_game, onclick_args=(level,), one_press=True))
 
             pygame.display.flip()
             self.clock.tick(FPS)
 
     def instructions_page(self):
-        page = BackgroundImage(self.screen, SIZE, os.path.join(IMAGES_DIR, 'Black_sheep_sign_blur.png'))
+        page = BackgroundImage(self.screen, (self.size, self.size), os.path.join(IMAGES_DIR, 'Black_sheep_sign_blur.png'))
         text = [
             "Goal: Stay with only one ball on the board.",
             "How:",
@@ -144,14 +146,14 @@ class BlackSheep:
             "   beginning, Once you've moved, there's no moving back.",
             "7) So stay focused and 1 2 3..."]
 
-        hover_button = page.add_hover_button(370, 20, 240, 35, color=colores['BRIGHT YELLOW'], text='Leave to go back',
+        hover_button = page.add_hover_button(int(self.size/1.62), int(self.size/30.0), int(self.size/2.5), int(self.size/17.14), color=colores['BRIGHT YELLOW'], text='Leave to go back',
                                              text_color=colores['BROWN'])
-        page.add_box(405, 62, 193, 120, color=colores['BRIGHT BROWN'])
-        page.add_text("Instructions.", 10, 10, color=colores['BLACK'])
-        line_size = 100
+        page.add_box(int(self.size/1.48), int(self.size/9.68), int(self.size/3.11), int(self.size/5.0), color=colores['BRIGHT BROWN'])
+        page.add_text("Instructions.", int(self.size/60.0), int(self.size/60.0), color=colores['BLACK'])
+        line_size = int(self.size/6.0)
         for line in text:
-            page.add_text(line, 10, line_size, size=18, font='Arial black', color=colores['BLACK']).appear()
-            line_size += 45
+            page.add_text(line,  int(self.size/60.0), line_size, size=int(self.size/33.33), font='Arial black', color=colores['BLACK']).appear()
+            line_size += int(self.size/13.33)
 
         run_background = True
         while run_background:
