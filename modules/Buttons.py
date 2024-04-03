@@ -219,7 +219,10 @@ class TextBox:
             self.surface.blit(self.text_surface, (self.x, self.y))
 
     def prevent_exceeding(self):
-        while self.x + self.text_surface.get_rect().width + self.no_exceeding > self.surface.get_width():
-            self.size -= 1
-            self.text_surface = pygame.font.SysFont(self.font, self.size).render(self.text, True, self.color)
-            self.box_surface = pygame.Surface(self.text_surface.get_rect().size) if self.box else None
+        if self.x < self.surface.get_width():
+            while self.x + self.text_surface.get_rect().width + self.no_exceeding > self.surface.get_width():
+                self.size -= 1
+                self.text_surface = pygame.font.SysFont(self.font, self.size).render(self.text, True, self.color)
+                self.box_surface = pygame.Surface(self.text_surface.get_rect().size) if self.box else None
+        self.width = self.text_surface.get_width()
+        self.height = self.text_surface.get_height()
