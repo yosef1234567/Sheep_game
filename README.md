@@ -11,7 +11,7 @@ Follow the instructions in the instructions page, and enjoy your time...
 THE CODE
 
 The game uses pygame library as its GUI.
-The code is built by using modular OOP, Whith objects like buttons, input boxes, backgrounds for handling interactive pages etc.
+The code is built by using modular OOP, With objects like buttons, input boxes, backgrounds for handling interactive pages etc.
 The main page consists of a board object, Which is a child of the background object, and more faetures like balls and black sheep,
 that are supposed to be dragged and removed through the game, 
 The main game uses also an algorithm to control the possible movements and mark them, and to handle a series being finished, wehther solved successfully or not.
